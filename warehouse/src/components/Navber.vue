@@ -4,7 +4,7 @@
         <img class="Logo" src="../../public/image/Logo oringo.png" alt="">
         <div class="right-nav">
           <p>About us</p>
-          <p>Product List</p>
+          <router-link  style="text-decoration: none; color: black;" to="/Productlist"><p>Product List</p></router-link>
           <p>DashBoard</p>
           <router-link  style="text-decoration: none; color: black;" to="/Login"><p class="login">Login</p></router-link>
         </div>

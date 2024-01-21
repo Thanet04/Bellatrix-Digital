@@ -1,7 +1,7 @@
 <template>
   <div>
       <Navber/> 
-      <img class="imagehome" src="../../public/image/backgroudhome.png" alt="">
+      <img class="imagehome" src="../../public/image/backgroudhome.svg" alt="">
       <div class="datatext">
         <h1>ระบบการจัดการสินค้าคืออะไร ?</h1>
         <p>{{text1}}
