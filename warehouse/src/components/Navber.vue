@@ -6,7 +6,7 @@
           <p>About us</p>
           <router-link  style="text-decoration: none; color: black;" to="/Productlist"><p>Product List</p></router-link>
           <p>DashBoard</p>
-          <router-link  style="text-decoration: none; color: black;" to="/Login"><p class="login">Login</p></router-link>
+          <router-link  style="text-decoration: none; color: black;" to="/Login"><button class="login">Login</button></router-link>
         </div>
       </div>
     </div>
@@ -42,7 +42,9 @@
         border-radius: 20px;
         border: 1px solid #000;
         background: #FFF;
-        padding: 0 80px 5px 80px;
+        font-size: 24px;
+        width: 200px;
+        height: 40px;
     }
 
   </style>

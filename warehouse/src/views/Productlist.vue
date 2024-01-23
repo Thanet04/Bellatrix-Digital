@@ -1,54 +1,47 @@
 <template>
   <Navber/>
-  <div class="center-page">
-        <div class="top-description">
-            <p class="text-product">Product list</p>
-            <div class="right-top-description">
-                <button class="create">Create</button>
-                <input type="text" class="search" placeholder="Search">
+    <div class="center-page">
+            <div class="top-description">
+                <p class="text-product">Product list</p>
+                <div class="right-top-description">
+                    <button class="create">Create</button>
+                    <input type="text" class="search" placeholder="Search">
+                </div>
+            </div>
+                <div class="title-colum">
+                    <table>
+                        <tr class="title">
+                            <th>Product Code</th>
+                            <th>Images</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Unit</th>
+                            <th>Product type</th>
+                            <th>Quantity</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr class="detail" v-for="(product, index) in productList" :key="index">
+                            <td>{{ product.productCode }}</td>
+                            <td><img src="../../public/image/image-tomato.svg" alt=""></td>
+                            <td>{{ product.name }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{ product.unit }}</td>
+                            <td>{{ product.productType }}</td>
+                            <td>{{ product.quantity }}</td>
+                            <td><img src="../../public/image/pen.svg" alt=""></td>
+                            <td><img src="../../public/image/delete.svg" alt=""></td>
+                        </tr>
+                    </table>
+                </div>
+            
+            <div class="low-description"> 
+                <p>Show</p>
+                <input style="border-radius: 3px; width: 50px; height: 30px; border: none;" type="button" value="12">
+                <p>entries</p>
+                <p>Showing 9 of entries</p>
             </div>
         </div>
-        <div class="title-product">
-            <p>Product Code</p>
-            <p>Images</p>
-            <p>Name</p>
-            <p>Price</p>
-            <p>Unit</p>
-            <p>Product Type</p>
-            <p>Quantity</p>                  
-        </div>
-        <div class="description">
-            <div>
-                <ul>
-                    <li style="list-style: none;" v-for="(item, index) in items" :key="index">
-                        {{ item }}
-                    </li>
-                    <li style="list-style: none;" v-for="(image, index) in images" :key="index">
-                        <img :src="image.png" :alt="image.alt">
-                    </li>
-                    <li style="list-style: none;" v-for="(name, index) in names" :key="index">
-                        {{ name }}
-                    </li>
-                    <li style="list-style: none;" v-for="(price, index) in prices" :key="index">
-                        {{ price }}
-                    </li>
-                    <li style="list-style: none;" v-for="(unit, index) in units" :key="index">
-                        {{ unit }}
-                    </li>
-                    <li style="list-style: none;" v-for="(producttype, index) in type" :key="index">
-                        {{ producttype }}
-                    </li>
-                    <li style="list-style: none;" v-for="(Quantity, index) in quantity" :key="index">
-                        {{ Quantity }}
-                    </li>
-                </ul>
-            </div>
-            <div class="edit-delete">
-                <img src="../../public/image/pen.svg " alt="image.alt" >
-                <img src="../../public/image/delete.svg" alt="image.alt" >
-            </div>            
-        </div>
-    </div>
 </template>
 
 <script>
@@ -58,32 +51,34 @@ import imagesearch from '../../public/image/search1.svg'
 export default {
     data() {
     return {
-            searchimage:imagesearch ,
-            items: ["E0123456", "E0123457", "E01234568", "E01234569", "E01234570"],
-            images: [
-            { png: "../../public/image/image-orage.png", alt: "Image 1" },
-            { png: "../../public/image/image-orage.png", alt: "Image 2" },
-            { png: "../../public/image/image-orage.png", alt: "Image 3" },
-            { png: "../../public/image/image-orage.png", alt: "Image 4" },
-            { png: "../../public/image/image-orage.png", alt: "Image 5" },
-            ],
-            names: ["Califonia Tomato","Califonia Tomato","Califonia Tomato","Califonia Tomato","Califonia Tomato"],
-            prices: ["1$","11$","22.5$","32$","35$"],
-            units: ["Piece","Pack","Box-24","Box-36","Box-40"],
-            type: ["Vegetable","Vegetable","Vegetable","Vegetable","Vegetable"],
-            quantity: ["36","25","34","5","2"],
-            mage: [
-            { src: "../../public/image/pen.svg", alt: "Pen Image" },
-            { src: "../../public/image/pen.svg", alt: "Pen Image" },
-            { src: "../../public/image/pen.svg", alt: "Pen Image" },
-            { src: "../../public/image/pen.svg", alt: "Pen Image" },
-            { src: "../../public/image/pen.svg", alt: "Pen Image" },           
-            ],
-            ment:[              
-            { src: "../../public/image/delete.svg", alt: "Delete Image" },
-            { src: "../../public/image/delete.svg", alt: "Delete Image" },
-            { src: "../../public/image/delete.svg", alt: "Delete Image" },
-            { src: "../../public/image/delete.svg", alt: "Delete Image" },           
+        productList: [
+        {
+            productCode: '123',
+            image: '../../public/image/image-tomato.svg',
+            name: 'Tomato',
+            price: '1$',
+            unit: 'Piece',
+            productType: 'Vegetable',
+            quantity: 50
+        },
+        {
+            productCode: '234',
+            image: '../../public/image/image-tomato.svg',
+            name: 'Tomato',
+            price: '11$',
+            unit: 'Pack',
+            productType: 'Vegetable',
+            quantity: 20
+        },
+        {
+            productCode: '345',
+            image: '../../public/image/image-tomato.svg',
+            name: 'Tomato',
+            price: '21$',
+            unit: 'Pack',
+            productType: 'Vegetable',
+            quantity: 30
+        },
             ]
         };
     }
@@ -101,11 +96,12 @@ export default {
         justify-content: space-between;
         height: 52px;
         align-items: center;
+        margin-bottom: 20px;
     }
     .text-product{
         color: #000;
         font-feature-settings: 'clig' off, 'liga' off;
-        font-family: Inter;
+        font-family: Roboto;
         font-size: 20px;
         font-style: normal;
         font-weight: 700;
@@ -114,6 +110,7 @@ export default {
     }
     .create{
         border-radius: 3px;
+        border: none;
         background: #4E8844;
         padding: 5px 10px 5px 10px;
         color: #FFF;
@@ -135,31 +132,27 @@ export default {
         background: url('../../public/image/search1.svg') no-repeat left center;
         background-size: 15px;
     }
-    .title-product{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    table {
+        border-collapse: collapse;
+        width: 1230px;
+    }
+    .title{
         background: #F9E3E3;
-        padding: 5px 69px;
-        margin-top: 30px;
-        color: #000;
-        font-feature-settings: 'clig' off, 'liga' off;
-        font-family: Inter;
-        font-size: 20px;
-        font-style: normal;
+        height: 30px;
     }
-    .description{
+    th, td {
+        text-align: center;
+        vertical-align: middle;
+    }
+    .detail {
+        border-bottom: 2px solid #DACFCF;
+        background: linear-gradient(0deg, #F6F2F2 0%, #F6F2F2 100%), #F6F2F2;
+    }
+    .low-description{
         display: flex;
-        justify-content: space-between;
-        color: #000;
-        font-feature-settings: 'clig' off, 'liga' off;
-        font-family: Inter;
-        font-size: 20px;
-        font-style: normal;
+        margin: 10px;
     }
-    .edit-delete{
-        display: flex; 
-        height: 20PX;
+    .low-description p{
+        padding: 5px;
     }
-    
 </style>
