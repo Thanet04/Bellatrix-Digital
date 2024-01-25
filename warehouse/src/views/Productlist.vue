@@ -1,13 +1,8 @@
 <template>
-  <Navber/>
-    <div class="center-page">
-            <div class="top-description">
-                <p class="text-product">Product list</p>
-                <div class="right-top-description">
-                    <button class="create">Create</button>
-                    <input type="text" class="search" placeholder="Search">
-                </div>
-            </div>
+<div>
+      <Navber/>
+        <div class="center-page">
+                <Createproduct/>
                 <div class="title-colum">
                     <table>
                         <tr class="title">
@@ -18,8 +13,8 @@
                             <th>Unit</th>
                             <th>Product type</th>
                             <th>Quantity</th>
-                            <th></th>
-                            <th></th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                         <tr class="detail" v-for="(product, index) in productList" :key="index">
                             <td>{{ product.productCode }}</td>
@@ -34,54 +29,71 @@
                         </tr>
                     </table>
                 </div>
-            
-            <div class="low-description"> 
-                <p>Show</p>
-                <input style="border-radius: 3px; width: 50px; height: 30px; border: none;" type="button" value="12">
-                <p>entries</p>
-                <p>Showing 9 of entries</p>
-            </div>
+                <div class="low-description"> 
+                    <p>Show</p>
+                    <input style="border-radius: 3px; width: 50px; height: 30px; border: none; text-align: center;" type="number" value="12" required="required">
+                    <p>entries</p>
+                    <p>Showing 9 of entries</p>
+                </div>  
         </div>
+</div>
+        
 </template>
 
 <script>
 
+import Createproduct from '@/components/Createproduct.vue';
 import imagesearch from '../../public/image/search1.svg'
 
 export default {
     data() {
-    return {
-        productList: [
-        {
-            productCode: '123',
-            image: '../../public/image/image-tomato.svg',
-            name: 'Tomato',
-            price: '1$',
-            unit: 'Piece',
-            productType: 'Vegetable',
-            quantity: 50
-        },
-        {
-            productCode: '234',
-            image: '../../public/image/image-tomato.svg',
-            name: 'Tomato',
-            price: '11$',
-            unit: 'Pack',
-            productType: 'Vegetable',
-            quantity: 20
-        },
-        {
-            productCode: '345',
-            image: '../../public/image/image-tomato.svg',
-            name: 'Tomato',
-            price: '21$',
-            unit: 'Pack',
-            productType: 'Vegetable',
-            quantity: 30
-        },
-            ]
+        return {
+            productList: [
+                {
+                    productCode: '123',
+                    image: '../../public/image/image-tomato.svg',
+                    name: 'Tomato',
+                    price: '1$',
+                    unit: 'Piece',
+                    productType: 'Vegetable',
+                    quantity: 50
+                },
+                {
+                    productCode: '234',
+                    image: '../../public/image/image-tomato.svg',
+                    name: 'Tomato',
+                    price: '11$',
+                    unit: 'Pack',
+                    productType: 'Vegetable',
+                    quantity: 20
+                },
+                {
+                    productCode: '345',
+                    image: '../../public/image/image-tomato.svg',
+                    name: 'Tomato',
+                    price: '21$',
+                    unit: 'Pack',
+                    productType: 'Vegetable',
+                    quantity: 30
+                },
+            ],
+            createdProduct: null,
+            products: []
         };
-    }
+    },
+    methods: {
+        createProduct() {
+            // จำลองการสร้างผลิตภัณฑ์
+            const newProduct = {
+                name: 'New Product'
+            };
+            // เพิ่มผลิตภัณฑ์ใหม่ในรายการผลิตภัณฑ์
+            this.products.push(newProduct);
+            // กำหนดค่าให้ createdProduct เพื่อแสดงผล
+            this.createdProduct = newProduct;
+        }
+    },
+    components: { Createproduct }
 };
 </script>
 
@@ -89,33 +101,7 @@ export default {
 
     .body{
         background: #E5EAF9;
-    }
-    .top-description{
-        background: #F6F6F6;
-        display: flex;
-        justify-content: space-between;
-        height: 52px;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-    .text-product{
-        color: #000;
-        font-feature-settings: 'clig' off, 'liga' off;
-        font-family: Roboto;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 150%;
-        margin-left: 20px;
-    }
-    .create{
-        border-radius: 3px;
-        border: none;
-        background: #4E8844;
-        padding: 5px 10px 5px 10px;
-        color: #FFF;
-        margin-right: 30px;
-    }
+    } 
     .center-page{
         border-radius: 3px;
         background: #FFF;
