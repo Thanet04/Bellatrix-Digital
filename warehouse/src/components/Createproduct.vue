@@ -18,22 +18,34 @@
           <p>Description*</p>
           <input type="text">
           <p>Cost Price*</p>
-          <input type="text">
+          <input type="number">
           <p>Price*</p>
-          <input type="text">
+          <input type="number">
           <p>Quantity*</p>
-          <input type="text">
-          <div>
-            <div>
-              <p>Unit</p>
-              
-            </div>
+          <input type="number">
+          <div style="display: flex; justify-content: space-around;">
+            <p>Unit*</p> 
+            <p>Product Type*</p>
           </div>
-          <input type="image" src="" alt="">
-          <p>Upload ภาพขนาด 395*296</p>
+          <div style="display: flex;">
+              <select class="unitSelect">
+                <option value="pack">Pack</option>
+                <option value="piece">Piece</option>
+                <option value="box">Box</option>
+              </select>
+              <select class="typeSelect">
+                <option value="vegetables">Vegetables</option>
+                <option value="fruits">Fruits</option>
+                <option value="water">Water</option>
+              </select>
+            </div>
           <div>
-            <button>cancel</button>
-            <button>Add</button>
+            <input type="file" @change="handleFileUpload" accept="image/*" style="width: 315px; height: 116px;;">
+            <p>Upload ภาพขนาด 395*296</p>
+          </div>
+          <div class="low-create">
+            <button class="cancel" @click="cancelproduct">Cancel</button>
+            <button class="add" @click="addProduct">Add</button>
           </div>
         </div>
       </div>
@@ -41,18 +53,29 @@
 </template>
 
 <script>
+  
 export default {
   data() {
     return {
           createdProduct: null, // เก็บข้อมูลผลิตภัณฑ์ที่สร้าง
           products: [], // เก็บข้อมูลผลิตภัณฑ์ทั้งหมด
+          imageUrl: null,
+      
         };
     },
     methods: {
     createProduct() {
       // จำลองการสร้างผลิตภัณฑ์
       const newProduct = {
-        name: 'New Product',
+        productCode:'',
+        name: '',
+        description: '',
+        costprice:'',
+        price:'',
+        quantity:'',
+        unit:'',
+        producttype:'',
+        imageUrl:'',
         // รายละเอียดอื่น ๆ ของผลิตภัณฑ์
       };
 
@@ -61,6 +84,9 @@ export default {
 
       // กำหนดค่าให้ createdProduct เพื่อแสดงผล
       this.createdProduct = newProduct;
+    },
+    cancelproduct(){
+      this.createdProduct = null;
     },
   },
 };
@@ -80,9 +106,6 @@ export default {
         font-feature-settings: 'clig' off, 'liga' off;
         font-family: Roboto;
         font-size: 20px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: 150%;
         margin-left: 20px;
     }
     .create{
@@ -106,5 +129,66 @@ export default {
       margin-top: -10%;
       position: absolute;
       background: #FFF;
+      border-radius: 30px;
+      background: #FFF;
+      box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.20);
+      width: 400px;
+      height: 800px;
+    }
+    .add-product h1{
+      color: #000;
+      text-align: center;
+      font-feature-settings: 'clig' off, 'liga' off;  
+      font-size: 20px;
+      padding: 10px;  
+    }
+    .add-product p{ 
+      color: #000;
+      margin-left: 50px;
+      font-feature-settings: 'clig' off, 'liga' off;
+      font-size: 15px;
+    }
+    .add-product input{
+      border-radius: 3px;
+      border: 1px solid #C1C1C1;
+      background: #FFF;
+      width: 315px;
+      height: 27px;
+      margin-left: 50px;
+      margin-bottom: 20px;
+    }
+    .low-create{
+      margin-left: 50px;
+    }
+    .cancel{
+      border-radius: 3px;
+      background: #F91414;  
+      border: none;
+      color: #FFF;
+      width: 131px;
+      height: 33px;
+    }
+    .add{
+      border-radius: 3px;
+      background: #000;
+      border: none;
+      color: #FFF;
+      width: 131px;
+      height: 33px;
+      margin: 25px;
+    }
+    .unitSelect{
+      width: 152px;
+      height: 27px;
+      margin-left: 50px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .typeSelect{
+      width: 152px;
+      height: 27px;
+      margin-left: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
 </style>
