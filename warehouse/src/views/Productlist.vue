@@ -17,15 +17,15 @@
                             <th>Delete</th>
                         </tr>
                         <tr class="detail" v-for="(product, index) in productList" :key="index">
-                            <td>{{ product.productCode }}</td>
-                            <td><img src="../../public/image/image-tomato.svg" alt=""></td>
-                            <td>{{ product.name }}</td>
-                            <td>{{ product.price }}</td>
-                            <td>{{ product.unit }}</td>
-                            <td>{{ product.productType }}</td>
-                            <td>{{ product.quantity }}</td>
-                            <td><img src="../../public/image/pen.svg" alt=""></td>
-                            <td><img src="../../public/image/delete.svg" alt=""></td>
+                            <td v-text="product.id"></td>
+                            <td><img :src="product.picture" alt=""></td>
+                            <td v-text="product.name"></td>
+                            <td v-text="product.price"></td>
+                            <td v-text="product.unit"></td>
+                            <td v-text="product.productType"></td>
+                            <td v-text="product.quantity"></td>
+                            <td><img class="eidt-data" src="../../public/image/pen.svg" alt=""></td>
+                            <td><img class="delete-data" @click="deleteProduct(index)" src="../../public/image/delete.svg" alt=""></td>
                         </tr>
                     </table>
                 </div>
@@ -43,57 +43,36 @@
 <script>
 
 import Createproduct from '@/components/Createproduct.vue';
-import imagesearch from '../../public/image/search1.svg'
+import axios from 'axios';
 
 export default {
     data() {
         return {
-            productList: [
-                {
-                    productCode: '123',
-                    image: '../../public/image/image-tomato.svg',
-                    name: 'Tomato',
-                    price: '1$',
-                    unit: 'Piece',
-                    productType: 'Vegetable',
-                    quantity: 50
-                },
-                {
-                    productCode: '234',
-                    image: '../../public/image/image-tomato.svg',
-                    name: 'Tomato',
-                    price: '11$',
-                    unit: 'Pack',
-                    productType: 'Vegetable',
-                    quantity: 20
-                },
-                {
-                    productCode: '345',
-                    image: '../../public/image/image-tomato.svg',
-                    name: 'Tomato',
-                    price: '21$',
-                    unit: 'Pack',
-                    productType: 'Vegetable',
-                    quantity: 30
-                },
-            ],
+            productList: [],
             createdProduct: null,
             products: []
         };
     },
     methods: {
-        createProduct() {
-            // จำลองการสร้างผลิตภัณฑ์
-            const newProduct = {
-                name: 'New Product'
-            };
-            // เพิ่มผลิตภัณฑ์ใหม่ในรายการผลิตภัณฑ์
-            this.products.push(newProduct);
-            // กำหนดค่าให้ createdProduct เพื่อแสดงผล
-            this.createdProduct = newProduct;
+        getProduct() {
+        const url = 'http://localhost:8080/product';
+        axios
+            .get(url)
+            .then(res => {
+              this.productList = res.data; // Update the productList with the data received from the API
+            })
+            .catch(error => {
+              console.error('Error fetching data from API:', error);
+            })
+        },
+        deleteProduct(index) {
+         // Your existing deleteProduct method
         }
     },
-    components: { Createproduct }
+    mounted() {
+        this.getProduct(); // Call getProduct when the component is mounted
+    },
+        components: { Createproduct }
 };
 </script>
 

@@ -12,11 +12,11 @@
         <div class="add-product">
           <h1>Add new Product</h1>
           <p>Product code*</p>
-          <input type="text">
+          <input type="text"  v-model="productCode">
           <p>Name*</p>
-          <input type="text">
+          <input type="text" v-model="name">
           <p>Description*</p>
-          <input type="text">
+          <input type="text" v-model="description">
           <p>Cost Price*</p>
           <input type="number">
           <p>Price*</p>
@@ -53,41 +53,83 @@
 </template>
 
 <script>
-  
+import axios from 'axios';
+
 export default {
   data() {
     return {
-          createdProduct: null, // เก็บข้อมูลผลิตภัณฑ์ที่สร้าง
-          products: [], // เก็บข้อมูลผลิตภัณฑ์ทั้งหมด
-          imageUrl: null,
-      
-        };
-    },
-    methods: {
+      createdProduct: null,
+      products: [],
+      imageUrl: null,
+      id: '',
+      name: '',
+      description: '',
+      costprice: 0,
+      price: 0,
+      amount: 0,
+      unit: '',
+      type: '',
+    };
+  },
+  methods: {
     createProduct() {
-      // จำลองการสร้างผลิตภัณฑ์
-      const newProduct = {
-        productCode:'',
+      this.createdProduct = {
+        id: '',
         name: '',
         description: '',
-        costprice:'',
-        price:'',
-        quantity:'',
-        unit:'',
-        producttype:'',
-        imageUrl:'',
-        // รายละเอียดอื่น ๆ ของผลิตภัณฑ์
+        costprice: 0,
+        price: 0,
+        amount: 0,
+        unit: '',
+        type: '',
+        imageUrl: '',
       };
-
-      // เพิ่มผลิตภัณฑ์ใหม่ในรายการผลิตภัณฑ์
-      this.products.push(newProduct);
-
-      // กำหนดค่าให้ createdProduct เพื่อแสดงผล
-      this.createdProduct = newProduct;
     },
-    cancelproduct(){
+    cancelproduct() {
       this.createdProduct = null;
     },
+    addProduct() {
+      const apiUrl = 'http://localhost:8080/product';
+      const newProduct = {
+      id: this.id,
+      name: this.name,
+      description: this.description,
+      costprice: this.costprice,
+      price: this.price,
+      amount: this.amount,
+      unit: this.unit,
+      type: this.type,
+      imageUrl: this.imageUrl,
+      };
+    axios.post(apiUrl, newProduct)
+      .then(response => {
+      console.log('Product added successfully:', response.data);
+
+      // ปิดส่วนเพิ่ม
+      this.createdProduct = null;
+    })
+    .catch(error => {
+      console.error('Error adding product:', error);
+    });
+    },
+    handleFileUpload(event) {
+      const file = event.target.files[0];
+
+      if (file) {
+
+        // อ่านไฟล์และสร้าง URL
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          this.imageUrl = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+
+        // บันทึกไฟล์
+        this.selectedFile = file;
+      }
+    }
   },
 };
 </script>
