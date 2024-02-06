@@ -3,7 +3,7 @@
     <div class="top-description">
       <p class="text-product">Product list</p>
       <div class="right-top-description">
-        <button class="transection">Transection</button>
+        <button class="transection" @click="goTransection">Transection</button>
         <button class="create" @click="createProduct">Create</button>
         <input type="text" class="search" placeholder="Search">
       </div>
@@ -12,42 +12,48 @@
         <div class="add-product">
           <h1>Add new Product</h1>
           <p>Product code*</p>
-          <input type="text"  v-model="productCode">
+          <input type="text"  v-model="id">
           <p>Name*</p>
           <input type="text" v-model="name">
           <p>Description*</p>
           <input type="text" v-model="description">
           <p>Cost Price*</p>
-          <input type="number">
+          <input type="number" v-model="buying_price">
           <p>Price*</p>
-          <input type="number">
+          <input type="number" v-model="selling_price">
           <p>Quantity*</p>
-          <input type="number">
+          <input type="number" v-model="amount">
           <div style="display: flex; justify-content: space-around;">
             <p>Unit*</p> 
             <p>Product Type*</p>
           </div>
           <div style="display: flex;">
-              <select class="unitSelect">
+              <select class="unitSelect" v-model="unit">
                 <option value="pack">Pack</option>
                 <option value="piece">Piece</option>
                 <option value="box">Box</option>
               </select>
-              <select class="typeSelect">
+              <select class="typeSelect" v-model="type">
                 <option value="vegetables">Vegetables</option>
                 <option value="fruits">Fruits</option>
                 <option value="water">Water</option>
               </select>
             </div>
-          <div>
-            <input type="file" @change="handleFileUpload" accept="image/*" style="width: 315px; height: 116px;;">
-            <p>Upload ภาพขนาด 395*296</p>
-          </div>
+            <div class="image-data" :style="{backgroudimage:'url'}">
+              <img class="clickupload" @click="uploadimage" src="../../public/image/upload.svg" alt="">
+          </div>  
           <div class="low-create">
+            <p>Upload ภาพขนาด 395*296</p>
             <button class="cancel" @click="cancelproduct">Cancel</button>
             <button class="add" @click="addProduct">Add</button>
           </div>
         </div>
+        <div class="show-image" v-show="selectedImage !== null">
+            <div class="close-show"><button @click="closeshow">Close</button></div>
+            <div class="image-now">
+              <img  v-for="imagesrc in urlimage" :key="imagesrc.id" :src="imagesrc.url" @click="imageurl(imagesrc.url, imagesrc.id)" alt=""/>
+            </div>
+          </div>
       </div>
  </div>
 </template>
@@ -60,29 +66,28 @@ export default {
     return {
       createdProduct: null,
       products: [],
-      imageUrl: null,
-      id: '',
-      name: '',
-      description: '',
-      costprice: 0,
-      price: 0,
-      amount: 0,
-      unit: '',
-      type: '',
+      picture: [],
+      selectedImage: null,
     };
   },
   methods: {
+    uploadimage() {
+      this.selectedImage = ''; 
+  },
+  closeshow(){
+    this.selectedImage = null;
+  },
     createProduct() {
       this.createdProduct = {
-        id: '',
         name: '',
+        picture: '',
         description: '',
-        costprice: 0,
-        price: 0,
-        amount: 0,
+        buying_price: '',
+        selling_price: '',
+        amount: '',
         unit: '',
         type: '',
-        imageUrl: '',
+        picture: '',
       };
     },
     cancelproduct() {
@@ -94,12 +99,12 @@ export default {
       id: this.id,
       name: this.name,
       description: this.description,
-      costprice: this.costprice,
-      price: this.price,
+      buying_price: this.buying_price,
+      selling_price: this.selling_price,
       amount: this.amount,
       unit: this.unit,
       type: this.type,
-      imageUrl: this.imageUrl,
+      picture: this.createProduct.picture,
       };
     axios.post(apiUrl, newProduct)
       .then(response => {
@@ -107,29 +112,28 @@ export default {
 
       // ปิดส่วนเพิ่ม
       this.createdProduct = null;
-    })
-    .catch(error => {
-      console.error('Error adding product:', error);
-    });
+      })
+      .catch(error => {
+        console.error('Error adding product:', error);
+      });
     },
-    handleFileUpload(event) {
-      const file = event.target.files[0];
-
-      if (file) {
-
-        // อ่านไฟล์และสร้าง URL
-        const reader = new FileReader();
-
-        reader.onload = () => {
-          this.imageUrl = reader.result;
-        };
-
-        reader.readAsDataURL(file);
-
-        // บันทึกไฟล์
-        this.selectedFile = file;
-      }
-    }
+    goTransection() {
+      this.$router.push({ name: 'Transection' });
+    },
+    
+  },
+  mounted() {
+    axios
+      .get("http://localhost:8080/api/pictures")
+      .then((response) => {
+        this.imageUrl = response.data;
+        this.urlimage = this.imageUrl;
+        console.log(this.urlimage);
+        console.log(this.urlimage[0].url);
+      })
+      .catch((error) => {
+        console.error("API error:", error);
+      });
   },
 };
 </script>
@@ -151,6 +155,7 @@ export default {
         margin-left: 20px;
     }
     .create{
+        cursor: pointer;
         border-radius: 3px;
         border: none;
         background: #4E8844;
@@ -159,6 +164,7 @@ export default {
         margin-right: 30px;
     }
     .transection{
+        cursor: pointer;
         border-radius: 3px;
         background: #8684E2;
         border: none;
@@ -199,10 +205,26 @@ export default {
       margin-left: 50px;
       margin-bottom: 20px;
     }
+    .image-data{
+      border: 3px solid #c1c1c1;
+      background-color: #FFF;
+      border-style: dashed;
+      margin-left: 50px;
+      height: 115px;
+      width: 315px;
+    }
+    .clickupload {
+      cursor: pointer;
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
     .low-create{
       margin-left: 50px;
     }
     .cancel{
+      cursor: pointer;
       border-radius: 3px;
       background: #F91414;  
       border: none;
@@ -211,6 +233,7 @@ export default {
       height: 33px;
     }
     .add{
+      cursor: pointer;
       border-radius: 3px;
       background: #000;
       border: none;
@@ -232,5 +255,42 @@ export default {
       margin-left: 20px;
       margin-top: 10px;
       margin-bottom: 10px;
+    }
+    .show-image{
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      background-color: #FFF;
+      border: 1px solid #c1c1c1;
+      margin-left: 10%;
+      width: 1000px;
+      height: 500px;
+      padding: 10px;
+    }
+    .close-show{
+      align-self: flex-end;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+    .close-show button{
+      cursor: pointer;
+      color: #FFF;
+      background-color: #F91414;
+      border: none;
+      border-radius: 5px;
+      height: 30px;
+      width: 80px;
+    }
+    .image-now {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 20px;
+  }
+    .image-now img{
+      cursor: pointer;
+      width: auto; 
+      height: 150px;
+      margin-bottom: 20px;
     }
 </style>

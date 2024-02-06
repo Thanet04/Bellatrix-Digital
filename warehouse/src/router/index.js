@@ -3,12 +3,14 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/Login.vue'
 import Productlist from '../views/Productlist.vue'
 import Createproduct from '../components/Createproduct.vue'
+import TransectionVue from '../views/Transection.vue'
+import DashBoardVue from '../views/DashBoard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/Homeview',
       name: 'home',
       component: HomeView
     },
@@ -26,6 +28,11 @@ const router = createRouter({
       path: '/Createproduct',
       name: 'Createproduct',
       component: Createproduct
+    },
+    {
+      path: '/Transection',
+      name: 'Transection',
+      component: TransectionVue
     }
     
   ]

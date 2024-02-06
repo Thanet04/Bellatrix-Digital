@@ -3,10 +3,10 @@
       <div class="Navber">
         <img class="Logo" src="../../public/image/Logo oringo.png" alt="">
         <div class="right-nav">
-          <p>About us</p>
-          <router-link  style="text-decoration: none; color: black;" to="/Productlist"><p>Product List</p></router-link>
-          <p>DashBoard</p>
-          <router-link  style="text-decoration: none; color: black;" to="/Login"><button class="login">Login</button></router-link>
+          <router-link style="text-decoration: none; color: black;" to="/HomeView"><p>Home</p></router-link>
+          <router-link style="text-decoration:none; color: black;" to="/Productlist"><p>Product List</p></router-link>
+           <p>DashBoard</p>
+          <router-link style="text-decoration: none; color: black;" to="/Login"><button class="login">Login</button></router-link>
         </div>
       </div>
     </div>
