@@ -39,7 +39,7 @@
                 <option value="water">Water</option>
               </select>
             </div>
-            <div class="image-data" :style="{backgroudimage:'url'}">
+            <div class="image-data" :style="{backgroundImage: 'url(' + backgroundImageUrl  + ')'}">
               <img class="clickupload" @click="uploadimage" src="../../public/image/upload.svg" alt="">
           </div>  
           <div class="low-create">
@@ -48,10 +48,10 @@
             <button class="add" @click="addProduct">Add</button>
           </div>
         </div>
-        <div class="show-image" v-show="selectedImage !== null">
+        <div class="show-image" v-show="selectedImage">
             <div class="close-show"><button @click="closeshow">Close</button></div>
             <div class="image-now">
-              <img  v-for="imagesrc in urlimage" :key="imagesrc.id" :src="imagesrc.url" @click="imageurl(imagesrc.url, imagesrc.id)" alt=""/>
+              <img v-for="imagesrc in urlimage" :key="imagesrc.id_img" :src="imagesrc.url" @click="imageshow(imagesrc.url, imagesrc.id_img)" alt=""/>
             </div>
           </div>
       </div>
@@ -66,36 +66,44 @@ export default {
     return {
       createdProduct: null,
       products: [],
-      picture: [],
-      selectedImage: null,
+      urlimage: [],
+      selectedImage: false,
+      backgroundImageUrl: '', // เพิ่มตัวแปรเก็บ URL ของภาพที่เลือก
+
     };
   },
   methods: {
-    uploadimage() {
-      this.selectedImage = ''; 
+  uploadimage() {
+    this.selectedImage = true; 
   },
   closeshow(){
-    this.selectedImage = null;
+    this.selectedImage = false;
   },
-    createProduct() {
-      this.createdProduct = {
-        name: '',
-        picture: '',
-        description: '',
-        buying_price: '',
-        selling_price: '',
-        amount: '',
-        unit: '',
-        type: '',
-        picture: '',
-      };
-    },
-    cancelproduct() {
-      this.createdProduct = null;
-    },
-    addProduct() {
-      const apiUrl = 'http://localhost:8080/product';
-      const newProduct = {
+  imageshow(url,id_img) {
+    console.log(url)
+    console.log(id_img)
+    console.log(this)
+    this.selectedImage = id_img;
+    this.backgroundImageUrl = url; // เก็บ URL ของภาพที่เลือก
+  },
+  createProduct() {
+    this.createdProduct = {
+      name: '',
+      picture: '',
+      description: '',
+      buying_price: '',
+      selling_price: '',
+      amount: '',
+      unit: '',
+      type: '',
+    };
+  },
+  cancelproduct() {
+    this.createdProduct = null;
+  },
+  addProduct() {
+    const apiUrl = 'http://localhost:8080/product';
+    const newProduct = {
       id: this.id,
       name: this.name,
       description: this.description,
@@ -104,8 +112,8 @@ export default {
       amount: this.amount,
       unit: this.unit,
       type: this.type,
-      picture: this.createProduct.picture,
-      };
+      picture: this.backgroundImageUrl,
+    };
     axios.post(apiUrl, newProduct)
       .then(response => {
       console.log('Product added successfully:', response.data);
@@ -208,6 +216,7 @@ export default {
     .image-data{
       border: 3px solid #c1c1c1;
       background-color: #FFF;
+      background-size:cover;
       border-style: dashed;
       margin-left: 50px;
       height: 115px;
