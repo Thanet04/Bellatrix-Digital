@@ -24,36 +24,57 @@
                             <td v-text="product.unit"></td>
                             <td v-text="product.type "></td>
                             <td v-text="product.amount"></td>
-                            <td><img class="eidt-data" @click="editProduct(index)" src="../../public/image/pen.svg" alt=""></td>
+                            <td><img class="edit-data" @click="editProduct(index)" src="../../public/image/pen.svg" alt=""></td>
                             <td><img class="delete-data" @click="confirmDelete(index)" src="../../public/image/delete.svg" alt=""></td>
                         </tr>
                     </table>
-                    <div v-if="editedProduct !== null">
-                    <form class="edited" @submit.prevent="updateProduct">
-                     <!-- Add form fields for editing the product properties -->
-                    <label for="editedName">Name</label>
-                    <input v-model="editedProduct.name" id="editedName" required>
-                    <label for="editedPrice">Price</label>
-                    <input type="number" v-model="editedProduct.selling_price" id="editedPrice" required>
-                    <label for="editedUnit">Unit</label>
-                    <select id="unit" class="unitSelect" v-model="editedProduct.unit">
-                        <option value="pack">Pack</option>
-                        <option value="piece">Piece</option>
-                        <option value="box">Box</option>
-                    </select>
-                    <label for="editedtype">Product Type</label>
-                    <select id="type" class="typeSelect" v-model="editedProduct.type">
-                        <option value="vegetables">Vegetables</option>
-                        <option value="fruits">Fruits</option>
-                        <option value="water">Water</option>
-                     </select>
-                    <label for="editedquantity">Quantity</label>
-                    <input type="number" v-model="editedProduct.amount" id="editedQuantity" required>
-                    <!-- Add other fields as needed -->
-                    <button class="editsave" type="submit" @click="updateProduct">Save</button>
-                    <button class="editcancel" @click="cancelEdit">Cancel</button>
-                    </form>
-                </div>
+                    <div v-if="editedProduct">
+                        <div class="EidtProduct">
+                        <h1>Edit Product</h1>
+                        <p>Product code*</p>
+                        <input type="number"  v-model="editedProduct.id">
+                        <p>Name*</p>
+                        <input type="text" v-model="editedProduct.name">
+                        <p>Description*</p>
+                        <input type="text" v-model="editedProduct.description">
+                        <p>Cost Price*</p>
+                        <input type="number" v-model="editedProduct.buying_price">
+                        <p>Price*</p>
+                        <input type="number" v-model="editedProduct.selling_price">
+                        <p>Quantity*</p>
+                        <input type="number" v-model="editedProduct.amount">
+                        <div style="display: flex; justify-content: space-around;">
+                            <p>Unit*</p> 
+                            <p>Product Type*</p>
+                        </div>
+                        <div style="display: flex;">
+                            <select class="unitSelect" v-model="editedProduct.unit">
+                                <option value="pack">Pack</option>
+                                <option value="piece">Piece</option>
+                                <option value="box">Box</option>
+                            </select>
+                            <select class="typeSelect" v-model="editedProduct.type">
+                                <option value="vegetables">Vegetables</option>
+                                <option value="fruits">Fruits</option>
+                                <option value="water">Water</option>
+                            </select>
+                        </div>
+                        <div class="image-data" :style="{backgroundImage: 'url(' + backgroundImageUrl  + ')'}">
+                            <img class="clickupload" @click="uploadimage" src="../../public/image/upload.svg" alt="">
+                        </div>  
+                        <div class="low-create">
+                            <p>Upload ภาพขนาด 395*296</p>
+                                <button class="editcancel" @click="cancelEdit">Cancel</button>
+                                <button class="editsave" @click="saveEdit">Save</button>
+                        </div>
+                        </div>
+                        <div class="show-image-page" v-show="selectedImage">
+                            <div class="close-show"><button @click="closeshow">Close</button></div>
+                             <div class="image-now">
+                            <img v-for="imagesrc in urlimage" :key="imagesrc.id_img" :src="imagesrc.url" @click="imageshow(imagesrc.url, imagesrc.id_img)" alt=""/>
+                        </div>
+                    </div>
+                 </div>
                 </div>
                 <div class="low-description"> 
                     <p>Show</p>
@@ -74,10 +95,10 @@ export default {
     data() {
         return {
             productList: [],
-            createdProduct: null,
             products: [],
+            selectedImage: false,
+            backgroundImageUrl: '', // เพิ่มตัวแปรเก็บ URL ของภาพที่เลือก
             editedProduct: null,
-            editedIndex: null,
         };
     },
     methods: {
@@ -100,9 +121,8 @@ export default {
         },
          deleteProduct(index) {
          // การลบผลิตภัณฑ์ที่มีอยู่
-         const productId = this.productList[index].id; 
+            const productId = this.productList[index].id; 
             const url = `http://localhost:8080/product/${productId}`;
-
             axios
                 .delete(url)
                 .then(() => {
@@ -114,39 +134,59 @@ export default {
                     console.error('เกิดข้อผิดพลาดในการลบผลิตภัณฑ์:', error);
                 });
         },
+        uploadimage() {
+            this.selectedImage = true; 
+        },
+        closeshow(){
+            this.selectedImage = false;
+        },
+        imageshow(url,id_img) {
+            console.log(url)
+            console.log(id_img)
+            console.log(this)
+            this.selectedImage = id_img;
+            this.backgroundImageUrl = url; // เก็บ URL ของภาพที่เลือก
+        },
         editProduct(index) {
-            
+            // Set editedProduct to a copy of the product data
             this.editedProduct = { ...this.productList[index] };
-            this.editedIndex = index;
         },
-         cancelEdit() {
-             
+        cancelEdit() {
             this.editedProduct = null;
-            this.editedIndex = null;
         },
-         updateProduct() {
+        saveEdit() {
             
-            const url = `http://localhost:8080/product/${this.editedProduct.id}`;
-
-             axios
-                .put(url, this.editedProduct)
-                .then(() => {
-                
-                this.$set(this.productList, this.editedIndex, { ...this.editedProduct });
-                console.log('แก้ไขสำเร็จ');
-                
-                this.editedProduct = null;
-                this.editedIndex = null;
-                })
+            const url = `http://localhost:8080/product/`+ this.editedProduct.id;
+    
+             // ส่งข้อมูลผ่าน PUT request ไปยังเซิร์ฟเวอร์
+            axios.put(url, this.editedProduct)
+            .then(response => {
+                // การจัดการเมื่อรับข้อมูลเรียบร้อย
+                console.log('Product data updated successfully:', response.data);
+                // รีเซ็ต editedProduct เป็นค่า null เพื่อซ่อนแบบฟอร์มแก้ไข
+                 this.editedProduct = null;
+            })
             .catch(error => {
-                console.error('เกิดข้อผิดพลาดในการแก้ไขผลิตภัณฑ์:', error);
+                // การจัดการเมื่อเกิดข้อผิดพลาด
+                console.error('Error updating product data:', error);
             });
-         },
+        },
     },
     mounted() {
-        this.getProduct(); 
+        this.getProduct();
+        axios
+            .get("http://localhost:8080/api/pictures")
+            .then((response) => {
+                this.imageUrl = response.data;
+                this.urlimage = this.imageUrl;
+                console.log(this.urlimage);
+                console.log(this.urlimage[0].url);
+            })
+            .catch((error) => {
+                console.error("API error:", error);
+            }); 
     },
-        components: { Createproduct }
+    components: { Createproduct }
 };
 </script>
 
@@ -194,20 +234,71 @@ export default {
     .low-description p{
         padding: 5px;
     }
-    .edited input{
-        margin-left: 10px;
-        width: 100px;
+    .EidtProduct{
+        margin-left: 35%;
+        margin-top: -35%;
+        position: absolute;
+        background: #FFF;
+        border-radius: 30px;
+        background: #FFF;
+        box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.20);
+        width: 400px;
+        height: 800px;
     }
-    #unitSelect,#typeSelect{
-        margin-left: 10px;
+    .EidtProduct h1{
+      color: #000;
+      text-align: center;
+      font-feature-settings: 'clig' off, 'liga' off;  
+      font-size: 20px;
+      padding: 10px;  
     }
-    .edited label,button{
-        margin-left: 10px;
+    .EidtProduct p{ 
+      color: #000;
+      margin-left: 50px;
+      font-feature-settings: 'clig' off, 'liga' off;
+      font-size: 15px;
+    }
+    .EidtProduct input{
+      border-radius: 3px;
+      border: 1px solid #C1C1C1;
+      background: #FFF;
+      width: 315px;
+      height: 27px;
+      margin-left: 50px;
+      margin-bottom: 20px;
+    }
+    .edit-data,.delete-data{
+        cursor: pointer;
     }
     .editsave{
-        background-color: green; border: none; color: #FFF; width: 60px; height: 25px; border-radius: 5px;
+        cursor: pointer;
+        background-color: green; 
+        border: none; color: #FFF; 
+        width: 100px; 
+        height: 30px; 
+        border-radius: 5px;
+        margin-left: 50px;
     }
     .editcancel{
-        background-color: red; border: none; color: #FFF; width: 60px; height: 25px; border-radius: 5px;
+        cursor: pointer;
+        background-color: red;
+        border: none;
+        color: #FFF;
+        width: 100px;
+        height: 30px;
+        border-radius: 5px;
+        margin-left: 30px;
+    }
+    .show-image-page{
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      background-color: #FFF;
+      border: 1px solid #c1c1c1;
+      margin-top: -30%;
+      margin-left: 10%;
+      width: 1000px;
+      height: 500px;
+      padding: 10px;
     }
 </style>

@@ -12,7 +12,7 @@
         <div class="add-product">
           <h1>Add new Product</h1>
           <p>Product code*</p>
-          <input type="text"  v-model="id">
+          <input type="number"  v-model="id">
           <p>Name*</p>
           <input type="text" v-model="name">
           <p>Description*</p>
