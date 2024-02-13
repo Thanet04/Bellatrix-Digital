@@ -5,24 +5,24 @@
         <div class="right-nav">
           <router-link style="text-decoration: none; color: black;" to="/HomeView"><p>Home</p></router-link>
           <router-link style="text-decoration:none; color: black;" to="/Productlist"><p>Product List</p></router-link>
-           <p>DashBoard</p>
+          <router-link style="text-decoration:none; color: black;" to="/Board"><p>DashBoard</p></router-link>
           <router-link style="text-decoration: none; color: black;" to="/Login"><button class="login">Login</button></router-link>
         </div>
       </div>
     </div>
-  </template>
+</template>
   
-  <script>
-  export default {
+<script>
+export default {
   
   }
-  </script>
+</script>
   
-  <style>
-    .Navber{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+<style>
+  .Navber{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
       padding: 50px;
       background: linear-gradient(180deg, #7FD2FF 0%, rgba(127, 210, 255, 0.00) 100%);
       height: 103px;
@@ -47,4 +47,4 @@
         height: 40px;
     }
 
-  </style>
+</style>

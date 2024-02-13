@@ -9,22 +9,13 @@
         <button class="botton-guest">Guest</button>
       </div>
     </div>
-  </template>
+</template>
   
-  <script>
-  export default {
-    mounted() {
-    // Disable scrolling on mount
-    document.body.style.overflow = 'hidden';
-  },
-  beforeDestroy() {
-    // Enable scrolling before destroying the component
-    document.body.style.overflow = '';
-  },
-  }
-  </script>
+<script>
+
+</script>
   
-  <style>
+<style>
 
   .pagelogin {
     display: flex;
@@ -88,5 +79,5 @@
     font-weight: 600;
     line-height: normal;
   }
-  </style>
+</style>
   

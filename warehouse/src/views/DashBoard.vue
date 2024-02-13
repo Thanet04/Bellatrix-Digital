@@ -1,14 +1,13 @@
 <template>
     <div>
-        <Navbar/>
+        <Navber/> 
         <div>dss</div>
     </div>
- 
 </template>
 
 <script>
 export default {
-
+    name: "DashBoardView"
 }
 </script>
 

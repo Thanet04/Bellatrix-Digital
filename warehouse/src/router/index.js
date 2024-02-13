@@ -4,7 +4,7 @@ import LoginView from '../views/Login.vue'
 import Productlist from '../views/Productlist.vue'
 import Createproduct from '../components/Createproduct.vue'
 import TransectionVue from '../views/Transection.vue'
-import DashBoardVue from '../views/DashBoard.vue'
+import DashBoardView from '../views/DashBoard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +33,11 @@ const router = createRouter({
       path: '/Transection',
       name: 'Transection',
       component: TransectionVue
+    },
+    {
+      path:'/Board',
+      name: 'DashBoardView',
+      component: DashBoardView
     }
     
   ]
