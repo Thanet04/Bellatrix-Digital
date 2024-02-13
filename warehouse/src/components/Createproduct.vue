@@ -5,7 +5,7 @@
       <div class="right-top-description">
         <button class="transection" @click="goTransection">Transection</button>
         <button class="create" @click="createProduct">Create</button>
-        <input type="text" class="search" placeholder="Search">
+        <input type="text"  v-model="searchQuery" class="search" placeholder="Search">
       </div>
       </div>           
       <div v-if="createdProduct">
@@ -53,6 +53,31 @@
             </div>
           </div>
       </div>
+      <table v-if="!createdProduct">
+      <thead>
+        <tr class="title">
+          <th>Product Code</th>
+          <th>Images</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Unit</th>
+          <th>Product Type</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="detail"  v-for="product in filteredProducts" :key="product.name">
+          <td>{{ product.id }}</td>
+          <td><img style="height: 65px; widtg: 40px;" @click="productaccount(product.id)" :src="product.picture" alt=""></td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.selling_price }}</td>
+          <td>{{ product.unit }}</td>
+          <td>{{ product.type }}</td>
+          <td>{{ product.amount }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p v-if="!filteredProducts.length && !createdProduct">No matching products found.</p>
  </div>
 </template>
 
@@ -67,6 +92,7 @@ export default {
       urlimage: [],
       selectedImage: false,
       backgroundImageUrl: '', // เพิ่มตัวแปรเก็บ URL ของภาพที่เลือก
+      searchQuery: '',
 
     };
   },
@@ -125,9 +151,8 @@ export default {
     },
     goTransection() {
       this.$router.push({ name: 'Transection' });
-    },
-    
-  },
+    },  
+},
   mounted() {
     axios
       .get("http://localhost:8080/api/pictures")
@@ -140,6 +165,13 @@ export default {
       .catch((error) => {
         console.error("API error:", error);
       });
+  },
+  computed: {
+     filteredProducts() {
+      return this.products.filter(product =>
+        product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    }
   },
 };
 </script>

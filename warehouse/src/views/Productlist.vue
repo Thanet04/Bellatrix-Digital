@@ -11,14 +11,14 @@
                             <th>Name</th>
                             <th>Price</th>
                             <th>Unit</th>
-                            <th>Product type</th>
+                            <th>Product Type</th>
                             <th>Quantity</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
-                        <tr class="detail" @click="productaccount" v-for="(product, index) in productList" :key="index">
+                        <tr class="detail" v-for="(product, index) in productList" :key="index">
                             <td v-text="product.id"></td>
-                            <td><img style="height: 65px; widtg: 40px;" :src="product.picture" alt=""></td>
+                            <td><img style="height: 65px; widtg: 40px;" @click="productaccount(product.id)" :src="product.picture" alt=""></td>
                             <td v-text="product.name"></td>
                             <td v-text="product.selling_price"></td>
                             <td v-text="product.unit"></td>
@@ -146,9 +146,9 @@ export default {
             console.log(this)
             this.selectedImage = id_img;
             this.backgroundImageUrl = url; // เก็บ URL ของภาพที่เลือก
+            this.editedProduct.picture = url;
         },
         editProduct(index) {
-            // Set editedProduct to a copy of the product data
             this.editedProduct = { ...this.productList[index] };
         },
         cancelEdit() {
@@ -156,18 +156,19 @@ export default {
         },
         saveEdit() {     
             const url = `http://localhost:8080/product/`+ this.editedProduct.id;
-             // ส่งข้อมูลผ่าน PUT request ไปยังเซิร์ฟเวอร์
             axios.put(url, this.editedProduct)
             .then(response => {
-                // การจัดการเมื่อรับข้อมูลเรียบร้อย
-                console.log('Product data updated successfully:', response.data);
-                // รีเซ็ต editedProduct เป็นค่า null เพื่อซ่อนแบบฟอร์มแก้ไข
-                 this.editedProduct = null;
+                console.log('Product data updated successfully:', response.data);     
+                this.editedProduct = null;
             })
             .catch(error => {
                 // การจัดการเมื่อเกิดข้อผิดพลาด
                 console.error('Error updating product data:', error);
             });
+        },
+        productaccount(id) {
+            console.log('click')
+            this.$router.push('/productaccount/'+id)
         },
     },
     mounted() {
@@ -234,7 +235,7 @@ export default {
     }
     .EidtProduct{
         margin-left: 35%;
-        margin-top: -15%;
+        margin-top: -25%;
         position: absolute;
         background: #FFF;
         border-radius: 30px;
@@ -294,7 +295,7 @@ export default {
       position: absolute;
       background-color: #FFF;
       border: 1px solid #c1c1c1;
-      margin-top: -30%;
+      margin-top: -15%;
       margin-left: 10%;
       width: 1000px;
       height: 500px;
