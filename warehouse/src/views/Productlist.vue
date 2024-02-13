@@ -16,7 +16,7 @@
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
-                        <tr class="detail" v-for="(product, index) in productList" :key="index">
+                        <tr class="detail" @click="productaccount" v-for="(product, index) in productList" :key="index">
                             <td v-text="product.id"></td>
                             <td><img style="height: 65px; widtg: 40px;" :src="product.picture" alt=""></td>
                             <td v-text="product.name"></td>
@@ -154,10 +154,8 @@ export default {
         cancelEdit() {
             this.editedProduct = null;
         },
-        saveEdit() {
-            
+        saveEdit() {     
             const url = `http://localhost:8080/product/`+ this.editedProduct.id;
-    
              // ส่งข้อมูลผ่าน PUT request ไปยังเซิร์ฟเวอร์
             axios.put(url, this.editedProduct)
             .then(response => {
