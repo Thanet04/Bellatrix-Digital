@@ -234,7 +234,7 @@ export default {
     }
     .EidtProduct{
         margin-left: 35%;
-        margin-top: -35%;
+        margin-top: -15%;
         position: absolute;
         background: #FFF;
         border-radius: 30px;
@@ -248,7 +248,8 @@ export default {
       text-align: center;
       font-feature-settings: 'clig' off, 'liga' off;  
       font-size: 20px;
-      padding: 10px;  
+      padding: 10px;
+      margin-top: 25px;  
     }
     .EidtProduct p{ 
       color: #000;

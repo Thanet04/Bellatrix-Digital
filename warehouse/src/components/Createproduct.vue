@@ -11,8 +11,6 @@
       <div v-if="createdProduct">
         <div class="add-product">
           <h1>Add new Product</h1>
-          <p>Product code*</p>
-          <input type="number"  v-model="id">
           <p>Name*</p>
           <input type="text" v-model="name">
           <p>Description*</p>
@@ -196,7 +194,8 @@ export default {
       text-align: center;
       font-feature-settings: 'clig' off, 'liga' off;  
       font-size: 20px;
-      padding: 10px;  
+      padding: 10px; 
+      margin: 25px 0 40px 0;
     }
     .add-product p{ 
       color: #000;
