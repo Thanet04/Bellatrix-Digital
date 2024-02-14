@@ -3,10 +3,11 @@
       <Navber/>
         <div class="center-page">
                 <Createproduct/>
+                <input type="text"  v-model="searchQuery" class="search-product" placeholder="Search">
                 <div class="title-colum">
                     <table>
                         <tr class="title">
-                            <th>Product Code</th>
+                            <th>Product ID</th>
                             <th>Images</th>
                             <th>Name</th>
                             <th>Price</th>
@@ -16,7 +17,7 @@
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
-                        <tr class="detail" v-for="(product, index) in productList" :key="index">
+                        <tr class="detail" v-for="(product, index) in filteredProducts" :key="index">
                             <td v-text="product.id"></td>
                             <td><img style="height: 65px; widtg: 40px;" @click="productaccount(product.id)" :src="product.picture" alt=""></td>
                             <td v-text="product.name"></td>
@@ -99,6 +100,7 @@ export default {
             selectedImage: false,
             backgroundImageUrl: '', // เพิ่มตัวแปรเก็บ URL ของภาพที่เลือก
             editedProduct: null,
+            searchQuery: '',
         };
     },
     methods: {
@@ -185,6 +187,13 @@ export default {
                 console.error("API error:", error);
             }); 
     },
+    computed: {
+     filteredProducts() {
+      return this.productList.filter(product =>
+        product.name.toLowerCase().includes(this.searchQuery.toLowerCase())     
+      );
+    }
+  },
     components: { Createproduct }
 };
 </script>
@@ -204,7 +213,13 @@ export default {
     .right-top-description button{
         padding-right: 50px;
     }
-    .right-top-description input {
+    .right-top-description{
+        margin-right: 220px;
+    }
+    .search-product{
+        position: absolute;
+        right: 180px;
+        top: 235px;
         padding: 5px 5px 5px 5px;
         padding-left: 30px; 
         background: url('../../public/image/search1.svg') no-repeat left center;
@@ -234,8 +249,9 @@ export default {
         padding: 5px;
     }
     .EidtProduct{
+        position: absolute;
         margin-left: 35%;
-        margin-top: -25%;
+        top: 15%;
         position: absolute;
         background: #FFF;
         border-radius: 30px;
@@ -290,15 +306,16 @@ export default {
         margin-left: 30px;
     }
     .show-image-page{
-      display: flex;
-      flex-direction: column;
-      position: absolute;
-      background-color: #FFF;
-      border: 1px solid #c1c1c1;
-      margin-top: -15%;
-      margin-left: 10%;
-      width: 1000px;
-      height: 500px;
-      padding: 10px;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        background-color: #FFF;
+        border: 1px solid #c1c1c1;
+        top: 300px;
+        margin-left: 10%;
+        width: 1000px;
+        height: 500px;
+        padding: 10px;
     }
 </style>

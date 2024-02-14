@@ -2,9 +2,9 @@
   <div>
     <Navber/>
     <div class="box-transection">
-        <div class="text-id" style="display: flex; ">
-            <p>Product ID : </p>
-            <p>Unit : </p>
+        <div class="text-id" style="display: flex;">
+            <p>Product ID : {{ this.id }}</p>
+            <p>Unit : {{ this.unit }}</p>
         </div>
         <table class="table-data">
             <tr>
@@ -24,9 +24,9 @@
          </tr>
         </table>
         <div class="text-row" style="display: flex; justify-content: flex-end;">
-        <p>Total : </p>
-        <p>Remain Quantity: </p>
-        <p>Profit : </p>
+        <p>Total : {{ this.total }}</p>
+        <p>Remain Quantity: {{ this.remainQuantity }}</p>
+        <p>Profit : {{ this.profit }}</p>
     </div>
     </div>
   </div>
@@ -39,6 +39,11 @@ export default {
     data() {
         return {
             trans: [],
+            id: '',
+            unit: '',
+            profit: '',
+            remainQuantity: '',
+            total: '',
         };
     },
     methods: {
@@ -48,8 +53,13 @@ export default {
                 .then(res => {
                     console.log(res.data)
                     this.trans = res.data.productAccounts[0].transactions
+                    this.id = this.$route.params.id
+                    this.unit = res.data.productAccounts[0].unit
+                    this.profit = res.data.productAccounts[0].profit
+                    this.remainQuantity = res.data.productAccounts[0].remainQuantity
+                    this.total = res.data.productAccounts[0].total
                     console.log(this.trans.transactionId)
-
+                    console.log(res.data.productAccounts[0])
                 })
                 .catch(error => {
                     console.error('Error fetching data from API:', error);

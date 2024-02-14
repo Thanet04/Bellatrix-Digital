@@ -40,7 +40,7 @@ export default {
   h1{
     color: #000;
     font-family: Roboto;
-    font-size: 64px;
+    font-size: 44px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -50,7 +50,7 @@ export default {
     margin-bottom: 100px ;
     color: #000;
     font-family: Roboto;
-    font-size: 32px;
+    font-size: 24px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;

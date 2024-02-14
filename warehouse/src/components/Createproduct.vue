@@ -5,7 +5,6 @@
       <div class="right-top-description">
         <button class="transection" @click="goTransection">Transection</button>
         <button class="create" @click="createProduct">Create</button>
-        <input type="text"  v-model="searchQuery" class="search" placeholder="Search">
       </div>
       </div>           
       <div v-if="createdProduct">
@@ -53,31 +52,6 @@
             </div>
           </div>
       </div>
-      <table v-if="!createdProduct">
-      <thead>
-        <tr class="title">
-          <th>Product Code</th>
-          <th>Images</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Unit</th>
-          <th>Product Type</th>
-          <th>Quantity</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="detail"  v-for="product in filteredProducts" :key="product.name">
-          <td>{{ product.id }}</td>
-          <td><img style="height: 65px; widtg: 40px;" @click="productaccount(product.id)" :src="product.picture" alt=""></td>
-          <td>{{ product.name }}</td>
-          <td>{{ product.selling_price }}</td>
-          <td>{{ product.unit }}</td>
-          <td>{{ product.type }}</td>
-          <td>{{ product.amount }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <p v-if="!filteredProducts.length && !createdProduct">No matching products found.</p>
  </div>
 </template>
 
@@ -92,7 +66,6 @@ export default {
       urlimage: [],
       selectedImage: false,
       backgroundImageUrl: '', // เพิ่มตัวแปรเก็บ URL ของภาพที่เลือก
-      searchQuery: '',
 
     };
   },
@@ -159,60 +132,53 @@ export default {
       .then((response) => {
         this.imageUrl = response.data;
         this.urlimage = this.imageUrl;
-        console.log(this.urlimage);
-        console.log(this.urlimage[0].url);
       })
       .catch((error) => {
         console.error("API error:", error);
       });
-  },
-  computed: {
-     filteredProducts() {
-      return this.products.filter(product =>
-        product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-    }
+      console.log(this.products)
   },
 };
 </script>
 
 <style>
  .top-description{
-        background: #F6F6F6;
-        display: flex;
-        justify-content: space-between;
-        height: 52px;
-        align-items: center;
-        margin-bottom: 20px;
+      background: #F6F6F6;
+      display: flex;
+      justify-content: space-between;
+      height: 52px;
+      align-items: center;
+      margin-bottom: 20px;
     }
     .text-product{
-        color: #000;
-        font-feature-settings: 'clig' off, 'liga' off;
-        font-family: Roboto;
-        font-size: 20px;
-        margin-left: 20px;
+      color: #000;
+      font-feature-settings: 'clig' off, 'liga' off;
+      font-family: Roboto;
+      font-size: 20px;
+      margin-left: 20px;
     }
     .create{
-        cursor: pointer;
-        border-radius: 3px;
-        border: none;
-        background: #4E8844;
-        padding: 5px 10px 5px 10px;
-        color: #FFF;
-        margin-right: 30px;
+      cursor: pointer;
+      border-radius: 3px;
+      border: none;
+      background: #4E8844;
+      padding: 5px 10px 5px 10px;
+      color: #FFF;
+      margin-right: 30px;
     }
     .transection{
-        cursor: pointer;
-        border-radius: 3px;
-        background: #8684E2;
-        border: none;
-        padding: 5px 10px 5px 10px;
-        margin-right: 30px;
-        color: #FFF;
+      cursor: pointer;
+      border-radius: 3px;
+      background: #8684E2;
+      border: none;
+      padding: 5px 10px 5px 10px;
+       margin-right: 30px;
+      color: #FFF;
     }
     .add-product{
+      position: absolute;
       margin-left: 35%;
-      margin-top: -10%;
+      top: 15%;
       position: absolute;
       background: #FFF;
       border-radius: 30px;
