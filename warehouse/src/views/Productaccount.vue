@@ -55,7 +55,7 @@ export default {
                     this.trans = res.data.productAccounts[0].transactions
                     this.id = this.$route.params.id
                     this.unit = res.data.productAccounts[0].unit
-                    this.profit = res.data.productAccounts[0].profit
+                    this.profit = res.data.productAccounts[0].profit ? 'profit' : 'loss'
                     this.remainQuantity = res.data.productAccounts[0].remainQuantity
                     this.total = res.data.productAccounts[0].total
                     console.log(this.trans.transactionId)

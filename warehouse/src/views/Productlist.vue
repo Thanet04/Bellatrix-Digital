@@ -14,6 +14,7 @@
                             <th>Unit</th>
                             <th>Product Type</th>
                             <th>Quantity</th>
+                            <th>Transfer</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
@@ -25,6 +26,7 @@
                             <td v-text="product.unit"></td>
                             <td v-text="product.type "></td>
                             <td v-text="product.amount"></td>
+                            <td class="transfer"><button @click="transferproduct(product.amount,product.unit)">Transfer</button></td>
                             <td><img class="edit-data" @click="editProduct(index)" src="../../public/image/pen.svg" alt=""></td>
                             <td><img class="delete-data" @click="confirmDelete(index)" src="../../public/image/delete.svg" alt=""></td>
                         </tr>
@@ -172,6 +174,16 @@ export default {
             console.log('click')
             this.$router.push('/productaccount/'+id)
         },
+        transferproduct(amount,unit){
+            if(amount <= 0){
+                alert('Product can not be transferred');
+            }else{
+                amount - 1 
+                if(unit == 'box'){
+                    axios.put
+                } 
+            }
+        }
     },
     mounted() {
         this.getProduct();
@@ -317,5 +329,12 @@ export default {
         width: 1000px;
         height: 500px;
         padding: 10px;
+    }
+    .transfer button{
+        border: none;
+        border-radius: 10px;
+        height: 25px;
+        width: 100px;
+        background-color: #A5E5FF;
     }
 </style>
