@@ -31,9 +31,7 @@
             <td v-text="product.unit"></td>
             <td v-text="product.type"></td>
             <td v-text="product.amount"></td>
-            <td class="transfer">
-              <button @click="transferproduct(product.amount, product.unit, product.name,product.id)"> Transfer</button>
-            </td>
+            <td class="transfer"><button @click="transferproduct(product.amount, product.unit, product.name,product.id)"> Transfer</button></td>
             <td> <img class="edit-data" @click="editProduct(index)"  src="../../public/image/pen.svg"  alt=""/></td>
             <td><img class="delete-data" @click="confirmDelete(index)"  src="../../public/image/delete.svg"  alt=""/></td>
           </tr>
@@ -69,16 +67,8 @@
                 <option value="water">Water</option>
               </select>
             </div>
-            <div
-              class="image-data"
-              :style="{ backgroundImage: 'url(' + backgroundImageUrl + ')' }"
-            >
-              <img
-                class="clickupload"
-                @click="uploadimage"
-                src="../../public/image/upload.svg"
-                alt=""
-              />
+            <div class="image-data" :style="{ backgroundImage: 'url(' + backgroundImageUrl + ')' }">
+              <img class="clickupload"  @click="uploadimage" src="../../public/image/upload.svg"  alt=""/>
             </div>
             <div class="low-create">
               <p>Upload ภาพขนาด 395*296</p>
@@ -91,13 +81,7 @@
               <button @click="closeshow">Close</button>
             </div>
             <div class="image-now">
-              <img
-                v-for="imagesrc in urlimage"
-                :key="imagesrc.id_img"
-                :src="imagesrc.url"
-                @click="imageshow(imagesrc.url, imagesrc.id_img)"
-                alt=""
-              />
+              <img  v-for="imagesrc in urlimage" :key="imagesrc.id_img"  :src="imagesrc.url" @click="imageshow(imagesrc.url, imagesrc.id_img)"  alt=""/>
             </div>
           </div>
         </div>
@@ -105,17 +89,7 @@
       <div class="low-description">
         <p>Show</p>
         <input
-          style="
-            border-radius: 3px;
-            width: 50px;
-            height: 30px;
-            border: none;
-            text-align: center;
-          "
-          type="number"
-          value="12"
-          required="required"
-        />
+          style="border-radius: 3px;  width: 50px;  height: 30px;  border: none;  text-align: center;"  type="number"  value="12"  required="required"/>
         <p>entries</p>
         <p>Showing 9 of entries</p>
       </div>
@@ -138,8 +112,7 @@ export default {
         newProduct: {
                       name: "food",
                       type: "vegetables",
-                      picture:
-                        "https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                      picture: "https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                       unit: "pack",
                       description: "my i fater u",
                       amount: 10,
@@ -149,8 +122,7 @@ export default {
                 oldProduct: {
                       name: "food",
                       type: "vegetables",
-                      picture:
-                        "https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                      picture: "https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                       unit: "box",
                       description: "my i fater u",
                       amount: 10,
@@ -160,8 +132,7 @@ export default {
         newProduct1: {
                       name: "food",
                       type: "vegetables",
-                      picture:
-                        "https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                      picture: "https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                       unit: "piece",
                       description: "my i fater u",
                       amount: 10,
@@ -171,8 +142,7 @@ export default {
                 oldProduct1: {
                       name: "food",
                       type: "vegetables",
-                      picture:
-                        "https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                      picture: "https://images.unsplash.com/photo-1610348725531-843dff563e2c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
                       unit: "pack",
                       description: "my i fater u",
                       amount: 10,
@@ -262,9 +232,7 @@ export default {
       if (amount <= 0) {
         alert("Product can not be transferred");
       } else {
-        if (unit == "box") {
-          
-          
+        if (unit == "box") {    
           axios.get("http://localhost:8080/products").then((res) => {
             this.productFilter = res.data.filter(
               (Product) => Product.name == name && Product.unit == "pack"
@@ -272,10 +240,8 @@ export default {
             axios
             .get("http://localhost:8080/product/" + this.productFilter[0].id)
             .then((res) => {
-              this.productNew = res.data;
-              
+              this.productNew = res.data;              
               console.log(this.productNew.amount);
-              
               axios.put("http://localhost:8080/product/" + id, this.model.oldProduct).then((res) => {
                       this.model.oldProduct = res.data;
                       this.model.oldProduct = {
@@ -305,9 +271,7 @@ export default {
                       buying_price: this.productNew.buying_price,
                       selling_price: this.productNew.selling_price,
                     };
-
                   console.log(this.productNew.amount);
-                
                   })
                   .catch((error) => {
                     console.error("Error updating product:", error);
@@ -323,10 +287,8 @@ export default {
             axios
             .get("http://localhost:8080/product/" + this.productFilter[0].id)
             .then((res) => {
-              this.productNew = res.data;
-              
-              console.log(this.productNew.amount);
-              
+              this.productNew = res.data;              
+              console.log(this.productNew.amount);              
               axios.put("http://localhost:8080/product/" + id, this.model.oldProduct1).then((res) => {
                       this.model.oldProduct1 = res.data;
                       this.model.oldProduct1 = {
@@ -340,7 +302,6 @@ export default {
                           selling_price: this.productNew.selling_price,
                         };
                     })
-
                 axios.put(
                     "http://localhost:8080/product/" + this.productNew.id,
                     this.model.newProduct1
@@ -357,22 +318,17 @@ export default {
                       buying_price: this.productNew.buying_price,
                       selling_price: this.productNew.selling_price,
                     };
-
                   console.log(this.productNew.amount);
-                
                   })
                   .catch((error) => {
                     console.error("Error updating product:", error);
-
                   });
               });
-          });
-       
+          });       
         }
       }
     },
   },
-
   mounted() {
     this.productList.forEach((Product) => {
       axios.get("http://localhost:8080/products").then((res) => {
@@ -384,7 +340,6 @@ export default {
       });
     });
     console.log(this.productFilter);
-
     this.getProduct();
     axios
       .get("http://localhost:8080/api/pictures")
