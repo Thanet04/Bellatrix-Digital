@@ -5,7 +5,6 @@
         <div class="right-nav">
           <router-link style="text-decoration: none; color: black;" to="/HomeView"><p>Home</p></router-link>
           <router-link style="text-decoration:none; color: black;" to="/Productlist"><p>Product List</p></router-link>
-          <router-link style="text-decoration:none; color: black;" to="/Board"><p>DashBoard</p></router-link>
           <router-link style="text-decoration: none; color: black;" to="/Login"><button class="login">Login</button></router-link>
         </div>
       </div>

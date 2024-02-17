@@ -4,7 +4,6 @@ import LoginView from '../views/Login.vue'
 import Productlist from '../views/Productlist.vue'
 import Createproduct from '../components/Createproduct.vue'
 import TransectionVue from '../views/Transection.vue'
-import DashBoardView from '../views/DashBoard.vue'
 import Productaccount from '../views/Productaccount.vue'
 
 const router = createRouter({
@@ -34,11 +33,6 @@ const router = createRouter({
       path: '/Transection',
       name: 'Transection',
       component: TransectionVue
-    },
-    {
-      path:'/Board',
-      name: 'DashBoardView',
-      component: DashBoardView
     },
     {
       path: '/productaccount/:id',

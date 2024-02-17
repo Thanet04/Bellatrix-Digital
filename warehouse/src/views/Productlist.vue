@@ -26,7 +26,7 @@
                             <td v-text="product.unit"></td>
                             <td v-text="product.type "></td>
                             <td v-text="product.amount"></td>
-                            <td class="transfer"><button @click="transferproduct(product.amount,product.unit)">Transfer</button></td>
+                            <td class="transfer"><button @click="transferproduct(product.amount,product.unit,product.name)">Transfer</button></td>
                             <td><img class="edit-data" @click="editProduct(index)" src="../../public/image/pen.svg" alt=""></td>
                             <td><img class="delete-data" @click="confirmDelete(index)" src="../../public/image/delete.svg" alt=""></td>
                         </tr>
@@ -99,6 +99,7 @@ export default {
         return {
             productList: [],
             products: [],
+            productFilter:[],
             selectedImage: false,
             backgroundImageUrl: '', // เพิ่มตัวแปรเก็บ URL ของภาพที่เลือก
             editedProduct: null,
@@ -174,14 +175,43 @@ export default {
             console.log('click')
             this.$router.push('/productaccount/'+id)
         },
-        transferproduct(amount,unit){
+        transferproduct(amount,unit,name){
+
+            this.productList.forEach((Product) =>{
+                    axios.get("http://localhost:8080/products").then((res) =>{
+                        this.productFilter.push({
+                             name: Product.name,
+                             unit:Product.unit,
+                             id:Product.id
+
+                            
+                        })
+                    })
+                })
+                console.log(this.productFilter)
+
+            console.log("click")
             if(amount <= 0){
                 alert('Product can not be transferred');
             }else{
-                amount - 1 
+                amount -= 1 
                 if(unit == 'box'){
-                    axios.put
-                } 
+                    axios.get("http://localhost:8080/products").then((res) => {
+                this.productFilter = res.data.filter((Product)=> Product.name == name && Product.unit == "pack" )
+                    axios.put("http://localhost:8080/product/"+this.productFilter[0].id,this.productFilter).then((res) => {
+                        this.productFilter = res.data
+                        this.productFilter = {
+                            amount: amount += 10
+                        }
+                    })
+                console.log(this.productFilter)
+            })
+                }else if(unit == 'pack'){
+                    axios.get("http://localhost:8080/products").then((res) => {
+                this.productFilter = res.data.filter((Product)=> Product.name == name && Product.unit == "piece" )        
+                console.log(this.productFilter)
+            })
+                }
             }
         }
     },
@@ -198,6 +228,9 @@ export default {
             .catch((error) => {
                 console.error("API error:", error);
             }); 
+
+           
+
     },
     computed: {
      filteredProducts() {
