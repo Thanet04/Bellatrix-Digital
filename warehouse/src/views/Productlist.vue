@@ -23,50 +23,19 @@
             <th>Edit</th>
             <th>Delete</th>
           </tr>
-          <tr
-            class="detail"
-            v-for="(product, index) in filteredProducts"
-            :key="product.id"
-          >
+          <tr class="detail" v-for="(product, index) in filteredProducts"  :key="product.id">
             <td v-text="product.id"></td>
-            <td>
-              <img
-                style="height: 65px; widtg: 40px"
-                @click="productaccount(product.id)"
-                :src="product.picture"
-                alt=""
-              />
-            </td>
+            <td> <img  style="height: 65px; widtg: 40px"  @click="productaccount(product.id)"  :src="product.picture"  alt=""/></td>
             <td v-text="product.name"></td>
             <td v-text="product.selling_price"></td>
             <td v-text="product.unit"></td>
             <td v-text="product.type"></td>
             <td v-text="product.amount"></td>
             <td class="transfer">
-              <button
-                @click="
-                  transferproduct(product.amount, product.unit, product.name,product.id)
-                "
-              >
-                Transfer
-              </button>
+              <button @click="transferproduct(product.amount, product.unit, product.name,product.id)"> Transfer</button>
             </td>
-            <td>
-              <img
-                class="edit-data"
-                @click="editProduct(index)"
-                src="../../public/image/pen.svg"
-                alt=""
-              />
-            </td>
-            <td>
-              <img
-                class="delete-data"
-                @click="confirmDelete(index)"
-                src="../../public/image/delete.svg"
-                alt=""
-              />
-            </td>
+            <td> <img class="edit-data" @click="editProduct(index)"  src="../../public/image/pen.svg"  alt=""/></td>
+            <td><img class="delete-data" @click="confirmDelete(index)"  src="../../public/image/delete.svg"  alt=""/></td>
           </tr>
         </table>
         <div v-if="editedProduct">
@@ -320,10 +289,6 @@ export default {
                           selling_price: this.productNew.selling_price,
                         };
                     })
-
-
-
-
                 axios.put(
                     "http://localhost:8080/product/" + this.productNew.id,
                     this.model.newProduct
@@ -419,13 +384,6 @@ export default {
       });
     });
     console.log(this.productFilter);
-
-
-
-    
-
-  
-    
 
     this.getProduct();
     axios
